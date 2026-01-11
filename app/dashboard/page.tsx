@@ -60,7 +60,7 @@ export default function DashboardPage() {
         >
           Welcome <span className="text-rose-400">Rimaas</span> this is your gift🌸
         </motion.h1>
-        <p className="text-slate-500 mt-4 text-sm max-w-md mx-auto leading-relaxed italic">
+        <p className="text-slate-500 mt-4 text-sm max-w-md mx-auto leading-relaxed ">
           Waad wada furi kartaa hada hadii aad rabto sababtoo ah waxaad soo furtay password-kii adkaa
         </p>
       </header>
@@ -113,7 +113,7 @@ export default function DashboardPage() {
                     <Mail className="text-rose-400" size={40} />
                   </div>
                   <h2 className="text-3xl font-bold text-slate-800">Warqadaada</h2>
-                  <div className="bg-rose-50/50 p-8 rounded-2xl text-slate-700 leading-loose italic text-lg border border-rose-100">
+                  <div className="bg-rose-50/50 p-8 rounded-2xl text-slate-700 leading-loose  text-lg border border-rose-100">
                     "Boqoradeyda Rimaas, maanta waa maalin aad iigu weyn. Sababtoo ah waxaa aduunka ku soo biiray adiga. Waxaad tahay qofka nolosheyda u iftiimiyay sida qoraxda."
                   </div>
                   <Heart className="mx-auto text-rose-500 fill-rose-500 size-8 animate-bounce" />

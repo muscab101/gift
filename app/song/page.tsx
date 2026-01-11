@@ -75,7 +75,7 @@ export default function SongPage() {
               <Volume2 size={24} />
               <span>Sababta Heestan?</span>
             </div>
-            <p className="text-slate-600 leading-relaxed italic text-lg">
+            <p className="text-slate-600 leading-relaxed  text-lg">
               "maxa dareentay markaad hestaan aragtay?."
             </p>
           </motion.div>
