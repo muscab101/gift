@@ -76,7 +76,7 @@ export default function HistoryPage() {
                 </p>
 
                 <p>
-                  <Typewriter delay={5} text="Waxaad ahayd gabar qurux badan, deggan, oo ixtiraam badan. Aragtideydii ugu horreysay, waxaan kugu arkay markii aan school‑ka ku cusbaa. Markaas ka dia, waxaan jeclaan jiray inaan maalin walba kugu arko school‑ka, sababtoo ah aad ayaan u xiisayn jiray inaan arko indhahaaga quruxda badan iyo dhoolla‑caddayntaada." />
+                  <Typewriter delay={5} text="Waxaad ahayd gabar qurux badan, deggan, oo ixtiraam badan. Aragtideydii ugu horreysay, waxaan kugu arkay markii aan school‑ka ku cusbaa. Markaas ka dib, waxaan jeclaan jiray inaan maalin walba kugu arko school‑ka, sababtoo ah aad ayaan u xiisayn jiray inaan arko indhahaaga quruxda badan iyo dhoolla‑caddayntaada." />
                 </p>
 
                 <p>
