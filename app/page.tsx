@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Lock, Clock, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function CountdownPage() {
   const router = useRouter();
   
-  // Taariikhda rasmiga ah: Jan 13, 2026, 12:00 AM saacadda Soomaaliya
-  const targetDate = new Date("2026-01-13T00:00:00+03:00").getTime();
+  // TEST MODE: 20 Ilbiriqsi oo kaliya laga bilaabo hadda
+  const [targetDate] = useState(() => new Date().getTime() + 20 * 1000);
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -41,7 +40,7 @@ export default function CountdownPage() {
   }, [targetDate, router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#FFF0F5] via-white to-[#FFF0F5] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-[#FFF0F5] via-white to-[#FFF0F5] flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
       
       {/* Background Decor */}
       <div className="absolute top-10 left-10 opacity-10">
@@ -61,33 +60,31 @@ export default function CountdownPage() {
         </h1>
         
         <p className="text-slate-500 text-sm mb-8">
-          Fadlan sug inta ay taariikhdu ka noqonayso 13-ka Janaayo.
+          Tijaabo: Waxay furmaysaa 20 ilbiriqsi ka dib.
         </p>
 
         {/* Countdown Box */}
-        <div className="grid grid-cols-4 gap-2 mb-8">
+        <div className="grid grid-cols-2 gap-4 mb-8 max-w-[200px] mx-auto">
           {[
-            { label: "Maalin", value: timeLeft.days },
-            { label: "Saac", value: timeLeft.hours },
-            { label: "Daqiiqo", value: timeLeft.minutes },
-            { label: "Ilbiriqsi", value: timeLeft.seconds },
+            { label: "Min", value: timeLeft.minutes },
+            { label: "Sec", value: timeLeft.seconds },
           ].map((item, i) => (
-            <div key={i} className="bg-rose-50 border border-rose-100 p-3 rounded-sm">
-              <div className="text-xl text-rose-600">{item.value}</div>
-              <div className="text-[10px] text-rose-400 uppercase tracking-wider">{item.label}</div>
+            <div key={i} className="bg-rose-50 border border-rose-100 p-4 rounded-sm">
+              <div className="text-2xl text-rose-600 leading-none">{item.value}</div>
+              <div className="text-[10px] text-rose-400 uppercase tracking-wider mt-1">{item.label}</div>
             </div>
           ))}
         </div>
 
         <div className="flex items-center justify-center gap-2 text-slate-300">
           <Clock size={14} />
-          <span className="text-[10px] uppercase tracking-[0.2em]">Automatic Unlock</span>
+          <span className="text-[10px] uppercase tracking-[0.2em]">Automatic Redirect</span>
         </div>
 
       </div>
 
       <footer className="absolute bottom-8 text-slate-400 text-[10px] uppercase tracking-widest">
-        Special Gift for Rimaas
+        Test Mode Active
       </footer>
     </div>
   );
