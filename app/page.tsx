@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 export default function CountdownPage() {
   const router = useRouter();
   
-  // TEST MODE: 20 Ilbiriqsi oo kaliya laga bilaabo hadda
-  const [targetDate] = useState(() => new Date().getTime() + 20 * 1000);
+  // Taariikhda rasmiga ah: Jan 13, 2026, 12:00 AM saacadda Soomaaliya (UTC+3)
+  const targetDate = new Date("2026-01-13T00:00:00+03:00").getTime();
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -55,36 +55,38 @@ export default function CountdownPage() {
           </div>
         </div>
 
-        <h1 className="text-2xl text-slate-700 mb-2">
-          Hadiyaddaada Waa Xiran Tahay
+        <h1 className="text-2xl text-slate-700 mb-2 font-normal">
+          Hadiyaddaada Waa ay Xiran Tahay
         </h1>
         
-        <p className="text-slate-500 text-sm mb-8">
-          Tijaabo: Waxay furmaysaa 20 ilbiriqsi ka dib.
+        <p className="text-slate-500 text-sm mb-8 font-normal">
+          Sug gacaliso inta ay taariikhdu ka noqonayso 13-da January.
         </p>
 
         {/* Countdown Box */}
-        <div className="grid grid-cols-2 gap-4 mb-8 max-w-[200px] mx-auto">
+        <div className="grid grid-cols-4 gap-2 mb-8">
           {[
-            { label: "Min", value: timeLeft.minutes },
-            { label: "Sec", value: timeLeft.seconds },
+            { label: "Maalin", value: timeLeft.days },
+            { label: "Saac", value: timeLeft.hours },
+            { label: "Daqiiqo", value: timeLeft.minutes },
+            { label: "Ilbiriqsi", value: timeLeft.seconds },
           ].map((item, i) => (
-            <div key={i} className="bg-rose-50 border border-rose-100 p-4 rounded-sm">
-              <div className="text-2xl text-rose-600 leading-none">{item.value}</div>
-              <div className="text-[10px] text-rose-400 uppercase tracking-wider mt-1">{item.label}</div>
+            <div key={i} className="bg-rose-50 border border-rose-100 p-3 rounded-sm">
+              <div className="text-xl text-rose-600 leading-none font-normal">{item.value}</div>
+              <div className="text-[10px] text-rose-400 uppercase tracking-wider mt-1 font-normal">{item.label}</div>
             </div>
           ))}
         </div>
 
         <div className="flex items-center justify-center gap-2 text-slate-300">
           <Clock size={14} />
-          <span className="text-[10px] uppercase tracking-[0.2em]">Automatic Redirect</span>
+          <span className="text-[10px] uppercase tracking-[0.2em] font-normal">Automatic Unlock</span>
         </div>
 
       </div>
 
-      <footer className="absolute bottom-8 text-slate-400 text-[10px] uppercase tracking-widest">
-        Test Mode Active
+      <footer className="absolute bottom-8 text-slate-400 text-[10px] uppercase tracking-widest font-normal">
+        Special Gift for Rimaas
       </footer>
     </div>
   );
