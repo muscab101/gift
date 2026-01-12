@@ -1,18 +1,19 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Lock, Unlock, Sparkles, Clock } from "lucide-react";
+import { motion } from "framer-motion";
+import { Lock, Clock, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function WelcomePage() {
+export default function CountdownPage() {
   const router = useRouter();
-  const [isUnlocked, setIsUnlocked] = useState(false);
   
-  // TEST MODE: 30 Ilbiriqsi oo kaliya (30 * 1000 ms)
-  const [targetDate] = useState(() => new Date().getTime() + 30 * 1000);
+  // Taariikhda rasmiga ah: Jan 13, 2026, 12:00 AM saacadda Soomaaliya
+  const targetDate = new Date("2026-01-13T00:00:00+03:00").getTime();
 
   const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
     minutes: 0,
     seconds: 0,
   });
@@ -24,10 +25,12 @@ export default function WelcomePage() {
 
       if (difference <= 0) {
         clearInterval(timer);
-        setIsUnlocked(true);
-        setTimeLeft({ minutes: 0, seconds: 0 });
+        // Markuu waqtigu dhammaado wuxuu u gudbiyaa bogga /first
+        router.push("/first");
       } else {
         setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
           minutes: Math.floor((difference / 1000 / 60) % 60),
           seconds: Math.floor((difference / 1000) % 60),
         });
@@ -35,81 +38,56 @@ export default function WelcomePage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate]);
+  }, [targetDate, router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#FFF0F5] via-white to-[#FFF0F5] flex flex-col items-center justify-center p-6 relative overflow-hidden font-['Outfit',sans-serif]">
+    <div className="min-h-screen bg-gradient-to-b from-[#FFF0F5] via-white to-[#FFF0F5] flex flex-col items-center justify-center p-6 relative overflow-hidden">
       
       {/* Background Decor */}
-      <div className="absolute top-10 left-10 opacity-10 rotate-12"><Heart className="text-rose-400" size={100} /></div>
-      <div className="absolute bottom-10 right-10 opacity-10 -rotate-12"><Sparkles className="text-rose-400" size={100} /></div>
+      <div className="absolute top-10 left-10 opacity-10">
+        <Heart className="text-rose-400" size={80} />
+      </div>
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="max-w-md w-full bg-white/80 backdrop-blur-xl p-10 rounded-[3rem] shadow-2xl border-4 border-white text-center relative z-10"
-      >
-        {/* Status Icon */}
-        <div className="mb-8 flex justify-center">
-          <motion.div 
-            className={`p-8 rounded-full ${isUnlocked ? "bg-green-100" : "bg-rose-100"} shadow-xl transition-colors duration-700`}
-          >
-            {isUnlocked ? (
-              <Unlock className="text-green-500 size-14 animate-bounce" />
-            ) : (
-              <Lock className="text-rose-500 size-14" />
-            )}
-          </motion.div>
+      <div className="max-w-md w-full bg-white border border-rose-100 p-10 rounded-sm shadow-sm text-center relative z-10">
+        
+        <div className="mb-6 flex justify-center">
+          <div className="p-5 bg-rose-50 rounded-sm">
+            <Lock className="text-rose-400 size-10" />
+          </div>
         </div>
 
-        <h1 className="text-3xl font-black text-slate-800 mb-3 uppercase tracking-tight">
-          {isUnlocked ? "Waa Laguu Fasaxay!" : "Sug 30 Ilbiriqsi"}
+        <h1 className="text-2xl text-slate-700 mb-2">
+          Hadiyaddaada Waa Xiran Tahay
         </h1>
-        <p className="text-slate-500 mb-10 font-medium italic">
-          {isUnlocked 
-            ? "Gacalisay, hadiyaddaadii waa diyaar 🌸" 
-            : "Tijaabada waxay dhamaanaysaa wax yar ka dib..."}
+        
+        <p className="text-slate-500 text-sm mb-8">
+          Fadlan sug inta ay taariikhdu ka noqonayso 13-ka Janaayo.
         </p>
 
-        <AnimatePresence mode="wait">
-          {!isUnlocked ? (
-            <motion.div 
-              key="timer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.5 }}
-              className="flex justify-center gap-4 mb-8"
-            >
-              <div className="bg-rose-500 text-white w-24 p-5 rounded-3xl shadow-lg border-b-4 border-rose-700">
-                <div className="text-4xl font-black">{timeLeft.seconds}</div>
-                <div className="text-[10px] uppercase font-bold opacity-80">Seconds</div>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.button
-              key="button"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => router.push("/dashboard")}
-              className="w-full bg-gradient-to-r from-rose-500 to-rose-400 text-white font-black py-5 rounded-3xl shadow-xl flex items-center justify-center gap-4 text-xl transition-all"
-            >
-              FURI HADIYADDA <Unlock size={24} />
-            </motion.button>
-          )}
-        </AnimatePresence>
-
-        <div className="mt-8 flex items-center justify-center gap-2 text-rose-300">
-          <Clock size={16} className="animate-pulse" />
-          <span className="text-[10px] font-black tracking-widest uppercase italic">
-            30 Sec Test Mode
-          </span>
+        {/* Countdown Box */}
+        <div className="grid grid-cols-4 gap-2 mb-8">
+          {[
+            { label: "Maalin", value: timeLeft.days },
+            { label: "Saac", value: timeLeft.hours },
+            { label: "Daqiiqo", value: timeLeft.minutes },
+            { label: "Ilbiriqsi", value: timeLeft.seconds },
+          ].map((item, i) => (
+            <div key={i} className="bg-rose-50 border border-rose-100 p-3 rounded-sm">
+              <div className="text-xl text-rose-600">{item.value}</div>
+              <div className="text-[10px] text-rose-400 uppercase tracking-wider">{item.label}</div>
+            </div>
+          ))}
         </div>
-      </motion.div>
 
-      <footer className="absolute bottom-8 text-slate-400 text-[10px] font-bold tracking-widest uppercase">
-        Special Gift for Rimaas ❤️
+        <div className="flex items-center justify-center gap-2 text-slate-300">
+          <Clock size={14} />
+          <span className="text-[10px] uppercase tracking-[0.2em]">Automatic Unlock</span>
+        </div>
+
+      </div>
+
+      <footer className="absolute bottom-8 text-slate-400 text-[10px] uppercase tracking-widest">
+        Special Gift for Rimaas
       </footer>
     </div>
   );
